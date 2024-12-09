@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lung Cancer Classifier</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Lung Cancer Histopathological Image Classifier</h1>
+        <p>Upload an image of lung histopathology for classification.</p>
+
+        <!-- Form to upload image -->
+        <form id="uploadForm" action="/predict" method="POST" enctype="multipart/form-data">
+            <input type="file" id="fileInput" name="image" accept="image/*" required>
+            <button type="submit">Classify Image</button>
+        </form>
+
+        <!-- Area to display result -->
+        <div id="result" class="result">
+            <p>Prediction: <span id="prediction"></span></p>
+            <img id="uploadedImage" src="" alt="Uploaded Image">
+        </div>
+    </div>
+
+    <script src="../static/script.js"></script>
+</body>
+</html>
