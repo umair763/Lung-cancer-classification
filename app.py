@@ -4,63 +4,57 @@ from flask import Flask, render_template, request, jsonify
 from tensorflow.keras.preprocessing import image
 import numpy as np
 from PIL import Image
-import io
 
 # Initialize Flask app
 app = Flask(__name__)
 
-# Load the trained model (make sure it's in the same directory as app.py or update the path)
-model = tf.keras.models.load_model(
-    "E:\\Code Playground\\Python Workspace\\6th semester\\AI Semester Project incr-2\\model\\lung_cancer_model_final.h5"
-)
+# Load the trained model
+model_path = "E:\\Github Repo\\AI Semester Project incr-2\\model\\lung_cancer_model_final.h5"
+model = tf.keras.models.load_model(model_path)
 
-# Define class labels (modify these according to your model classes)
-class_names = [
-    "adenocarcinoma",
-    "benign",
-    "squamous_cell_carcinoma",
-]  # Replace with actual class labels
-
+# Define class labels
+class_names = ["adenocarcinoma", "benign", "squamous_cell_carcinoma"]
 
 def prepare_image(img):
-    """Process the image for prediction."""
-    img = img.resize((224, 224))  # Resize image to match model input
-    img_array = np.array(img)  # Convert image to numpy array
+    """Prepare the image for prediction."""
+    img = img.resize((224, 224))  # Resize to match model input
+    img_array = np.array(img)  # Convert to numpy array
     img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
-    img_array = img_array / 255.0  # Normalize the image
+    img_array = img_array / 255.0  # Normalize to [0, 1]
     return img_array
-
 
 @app.route("/")
 def index():
-    """Render the homepage with the form."""
+    """Serve the HTML frontend."""
     return render_template("index.html")
-
 
 @app.route("/predict", methods=["POST"])
 def predict():
-    """Process the image, predict class, and return the result."""
+    """Process image upload and return prediction."""
     if "image" not in request.files:
-        return jsonify({"error": "No file part"}), 400
+        return jsonify({"error": "No image file uploaded."}), 400
 
     file = request.files["image"]
     if file.filename == "":
-        return jsonify({"error": "No selected file"}), 400
+        return jsonify({"error": "No file selected."}), 400
 
-    # Read and process the image
-    img = Image.open(file.stream)
-    img_array = prepare_image(img)
+    try:
+        # Open and process the image
+        img = Image.open(file.stream)
+        img_array = prepare_image(img)
 
-    # Make prediction
-    prediction = model.predict(img_array)
-    predicted_class = np.argmax(prediction, axis=1)[
-        0
-    ]  # Get the index of the class with highest probability
-    predicted_class_name = class_names[predicted_class]
+        # Predict using the model
+        predictions = model.predict(img_array)
+        predicted_index = np.argmax(predictions, axis=1)[0]
+        predicted_class = class_names[predicted_index]
+        confidence = f"{np.max(predictions) * 100:.2f}%"
 
-    # Return prediction as a JSON response
-    return jsonify({"prediction": predicted_class_name})
-
+        return jsonify({
+            "prediction": predicted_class,
+            "confidence": confidence
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)
