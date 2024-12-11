@@ -9,7 +9,7 @@ from PIL import Image
 app = Flask(__name__)
 
 # Load the trained model
-model_path = "E:\\Github Repo\\AI Semester Project incr-2\\model\\lung_cancer_model_final.h5"
+model_path = "E:\\Github Repo\\Lung-cancer-classification\\model\\lung_cancer_model_final.h5"
 model = tf.keras.models.load_model(model_path)
 
 # Define class labels
