@@ -1,25 +1,21 @@
-Sure! Below is the content you requested in Markdown format:
-
-````markdown
 # Lung Cancer Image Classification Project
 
 This project builds an AI model to classify lung cancer images into Adenocarcinoma, Benign, and Squamous Cell Carcinoma. It integrates a Flask backend with an intuitive, user-friendly front-end interface for real-time predictions.
 
 ## Table of Contents
 
--   [Project Overview](#project-overview)
--   [Dataset Description](#dataset-description)
--   [Project Directory Structure](#project-directory-structure)
--   [Requirements](#requirements)
--   [How to Run the Project](#how-to-run-the-project)
--   [Model Architecture](#model-architecture)
--   [Flask Integration](#flask-integration)
--   [Front-End Interface](#front-end-interface)
--   [Features](#features)
--   [Evaluation](#evaluation)
--   [Results](#results)
--   [Future Improvements](#future-improvements)
--   [References](#references)
+-   [Project Overview](#1-project-overview)
+-   [Dataset Description](#2-dataset-description)
+-   [Project Directory Structure](#3-project-directory-structure)
+-   [Requirements](#4-requirements)
+-   [How to Run the Project](#5-how-to-run-the-project)
+-   [Model Architecture](#6-model-architecture)
+-   [Flask Integration](#7-flask-integration)
+-   [Front-End Interface](#8-front-end-interface)
+-   [Features](#9-features)
+-   [Evaluation](#10-evaluation)
+-   [Results](#11-results)
+-   [References](#12-references)
 
 ## 1. Project Overview
 
@@ -81,7 +77,7 @@ Lung-Cancer-Classification/
 ├── train_model.py                  # Model training script
 └── README.md                       # Documentation
 ```
-````
+
 
 ## 4. Requirements
 
@@ -169,6 +165,17 @@ The front-end interface is developed using HTML, CSS, and Bootstrap. It allows u
 -   Upload lung cancer images.
 -   View the predictions in a clean and modern design.
 
+## Screenshots
+
+-   **Home Page**
+
+![Home Page](<./git_images/img(1).png>)
+
+-   **Prediction Result**
+
+![Prediction Result](<./git_images/img(3).png>)
+![Prediction Result](<./git_images/img(2).png>)
+
 ### Features:
 
 -   Simple file upload section.
@@ -202,25 +209,11 @@ Results are displayed for:
 -   Validation Accuracy: ~96%
 -   Test Accuracy: ~97%
 
-## 12. Future Improvements
 
--   Add Transfer Learning using pre-trained models like ResNet or InceptionV3.
--   Deploy the application on cloud platforms like Heroku or AWS.
--   Add detailed visualization of Grad-CAM to show areas of focus in images.
-
-## 13. References
+## 12. References
 
 -   TensorFlow Documentation: https://www.tensorflow.org
 -   Flask Documentation: https://flask.palletsprojects.com
 -   Kaggle: Lung Cancer Image Dataset
 
-## Screenshots
 
--   **Home Page**
-
-![Home Page](<./git_images/img(1).png>)
-
--   **Prediction Result**
-
-![Prediction Result](<./git_images/img(3).png>)
-![Prediction Result](<./git_images/img(2).png>)
