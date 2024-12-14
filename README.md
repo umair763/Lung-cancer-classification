@@ -199,8 +199,8 @@ Results are displayed for:
 ## 11. Results
 
 -   Training Accuracy: ~95%
--   Validation Accuracy: ~93%
--   Test Accuracy: ~92%
+-   Validation Accuracy: ~96%
+-   Test Accuracy: ~97%
 
 ## 12. Future Improvements
 
