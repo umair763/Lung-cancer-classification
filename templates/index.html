@@ -1,83 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Lung Cancer Classifier</title>
-      <link rel="stylesheet" href="../static/style.css" />
-      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
-   </head>
-   <body>
-      <div id="wrapperAD" class="wrapperAdjust">
-         <div class="wrapper">
-            <div class="container">
-               <header>
-                  <h1>Lung Cancer Classification</h1>
-                  <p>Upload a histopathological image of lung tissue for AI-based classification.</p>
-               </header>
+	<head>
+		<meta charset="UTF-8" />
+		<link
+			rel="icon"
+			href="../static/images/favicon.webp"
+			type="image/webp" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<title>Lung Cancer Classifier</title>
+		<link
+			rel="stylesheet"
+			href="../static/style.css" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+			rel="stylesheet" />
+	</head>
+	<body>
+		<div
+			id="wrapperAD"
+			class="wrapperAdjust">
+			<div class="wrapper">
+				<div class="container">
+					<header>
+						<h1>Lung Cancer Classification</h1>
+						<p
+							>Upload a histopathological image of lung tissue for AI-based
+							classification.</p
+						>
+					</header>
 
-               <!-- Image upload container -->
-               <div
-                  class="upload-container"
-                  onclick="triggerFileInput()"
-                  ondrop="handleDrop(event)"
-                  ondragover="allowDrop(event)"
-               >
-                  <div class="plus-sign">+</div>
-                  <input
-                     type="file"
-                     id="fileInput"
-                     name="image"
-                     accept="image/*"
-                     required
-                     onchange="handleImageSelection(event)"
-                  />
-               </div>
+					<!-- Image upload container -->
+					<div
+						class="upload-container"
+						onclick="triggerFileInput()"
+						ondrop="handleDrop(event)"
+						ondragover="allowDrop(event)">
+						<div class="plus-sign">+</div>
+						<input
+							type="file"
+							id="fileInput"
+							name="image"
+							accept="image/*"
+							required
+							onchange="handleImageSelection(event)" />
+					</div>
 
-               <!-- Image guidelines -->
-               <!-- Image guidelines (initially hidden) -->
-               <div id="guidelines" class="guidelines">
-                  <img src="../static/images/lungaca4001.jpeg" alt="Guideline 1" />
-                  <img src="../static/images/lungaca4002.jpeg" alt="Guideline 2" />
-                  <img src="../static/images/lungscc4001.jpeg" alt="Guideline 3" />
-                  <img src="../static/images/lungscc4002.jpeg" alt="Guideline 4" />
-               </div>
+					<!-- Image guidelines -->
+					<!-- Image guidelines (initially hidden) -->
+					<div
+						id="guidelines"
+						class="guidelines">
+						<img
+							src="../static/images/lungaca4001.jpeg"
+							alt="Guideline 1" />
+						<img
+							src="../static/images/lungaca4002.jpeg"
+							alt="Guideline 2" />
+						<img
+							src="../static/images/lungscc4001.jpeg"
+							alt="Guideline 3" />
+						<img
+							src="../static/images/lungscc4002.jpeg"
+							alt="Guideline 4" />
+					</div>
 
-               <!-- Classify button -->
-               <button id="classifyButton" class="btn-submit" onclick="classifyImage()">Classify</button>
+					<!-- Classify button -->
+					<button
+						id="classifyButton"
+						class="btn-submit"
+						onclick="classifyImage()"
+						>Classify</button
+					>
 
-               <!-- Loading bar -->
-               <div id="loadingBar" class="loading-bar" style="display: none">
-                  <div class="loading-bar-inner"></div>
-               </div>
+					<!-- Loading bar -->
+					<div
+						id="loadingBar"
+						class="loading-bar"
+						style="display: none">
+						<div class="loading-bar-inner"></div>
+					</div>
 
-               <!-- Result -->
-               <div id="result" class="result">
-                  <h3>Prediction</h3>
-                  <p id="prediction"></p>
-                  <div class="result-image">
-                     <img id="uploadedImage" src="" alt="Uploaded Image" />
-                  </div>
-                  <button id="seeMoreButton" class="btn-see-more" onclick="toggleDetails()">See More</button>
-               </div>
+					<!-- Result -->
+					<div
+						id="result"
+						class="result">
+						<h3>Prediction</h3>
+						<p id="prediction"></p>
+						<div class="result-image">
+							<img
+								id="uploadedImage"
+								src=""
+								alt="Uploaded Image" />
+						</div>
+						<button
+							id="seeMoreButton"
+							class="btn-see-more"
+							onclick="toggleDetails()"
+							>See More</button
+						>
+					</div>
 
-               <!-- Sliding Details (Initially hidden) -->
-               <div id="slidingDetails" class="sliding-details">
-                  <h4>Details</h4>
-                  <div class="slidingDetails-img">
-                     <img src="../static/images/accuracy.png" style="margin-bottom: 12px" alt="Guideline 1" />
-                     <img src="../static/images/loss.png" style="margin-bottom: 12px" alt="Guideline 2" />
-                     <h3>Confidence Level</h3>
-                     <p
-                        style="background-color: rgb(223, 223, 223); padding: 10px; margin-top: 5px"
-                        id="confidence"
-                     ></p>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
+					<!-- Sliding Details (Initially hidden) -->
+					<div
+						id="slidingDetails"
+						class="sliding-details">
+						<h4>Details</h4>
+						<div class="slidingDetails-img">
+							<img
+								src="../static/images/accuracy.png"
+								style="margin-bottom: 12px"
+								alt="Guideline 1" />
+							<img
+								src="../static/images/loss.png"
+								style="margin-bottom: 12px"
+								alt="Guideline 2" />
+							<h3>Confidence Level</h3>
+							<p
+								style="background-color: rgb(223, 223, 223); padding: 10px; margin-top: 5px"
+								id="confidence"></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-      <script src="../static/script.js"></script>
-   </body>
+		<script src="../static/script.js"></script>
+	</body>
 </html>
