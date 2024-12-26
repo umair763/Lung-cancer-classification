@@ -44,7 +44,6 @@ The dataset contains lung cancer images categorized into three classes:
 The images are organized into three main directories:
 
 -   Train: Training data
--   Validation: Validation data
 -   Test: Testing data
 
 ## 3. Project Directory Structure
@@ -200,7 +199,6 @@ The model is evaluated using:
 Results are displayed for:
 
 -   Training data
--   Validation data
 -   Test data
 
 ## 11. Results
