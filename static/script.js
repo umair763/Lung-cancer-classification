@@ -105,4 +105,17 @@ function toggleDetails() {
 		// Add the 'wrapperAdjust' class when sliding details are opened
 		wrapperAdjustment.classList.add("wrapperAdjust");
 	}
+
+	const slidingDetailsLeft = document.getElementById("slidingDetailsLeft");
+
+	// Toggle the 'open' class for the left sidebar
+	if (slidingDetailsLeft.classList.contains("open")) {
+		slidingDetailsLeft.classList.remove("open");
+		slidingDetailsLeft.style.display = "none";
+		wrapperAdjustment.classList.remove("wrapperAdjust");
+	} else {
+		slidingDetailsLeft.classList.add("open");
+		slidingDetailsLeft.style.display = "block";
+		wrapperAdjustment.classList.add("wrapperAdjust");
+	}
 }
