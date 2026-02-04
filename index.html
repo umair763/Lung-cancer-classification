@@ -1,185 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neural Network Architecture</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        table {
-            border-collapse: collapse;
-            width: 80%;
-            margin: 20px 0;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        th, td {
-            padding: 12px 15px;
-            text-align: center;
-            border: 1px solid #ddd;
-        }
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        .total, .optimizer {
-            font-weight: bold;
-            background-color: #f1f1f1;
-        }
-    </style>
-</head>
-<body>
-    <table>
-        <thead>
-            <tr>
-                <th>Layer (Type)</th>
-                <th>Output Shape</th>
-                <th>Param #</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Rescaling (Rescaling)</td>
-                <td>(None, 224, 224, 3)</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>Conv2D</td>
-                <td>(None, 224, 224, 32)</td>
-                <td>896</td>
-            </tr>
-            <tr>
-                <td>MaxPooling2D</td>
-                <td>(None, 112, 112, 32)</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>BatchNormalization</td>
-                <td>(None, 112, 112, 32)</td>
-                <td>128</td>
-            </tr>
-            <tr>
-                <td>Dropout</td>
-                <td>(None, 112, 112, 32)</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>Conv2D</td>
-                <td>(None, 112, 112, 64)</td>
-                <td>18,496</td>
-            </tr>
-            <tr>
-                <td>MaxPooling2D</td>
-                <td>(None, 56, 56, 64)</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>BatchNormalization</td>
-                <td>(None, 56, 56, 64)</td>
-                <td>256</td>
-            </tr>
-            <tr>
-                <td>Dropout</td>
-                <td>(None, 56, 56, 64)</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>Conv2D</td>
-                <td>(None, 56, 56, 128)</td>
-                <td>73,856</td>
-            </tr>
-            <tr>
-                <td>MaxPooling2D</td>
-                <td>(None, 28, 28, 128)</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>BatchNormalization</td>
-                <td>(None, 28, 28, 128)</td>
-                <td>512</td>
-            </tr>
-            <tr>
-                <td>Dropout</td>
-                <td>(None, 28, 28, 128)</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>Conv2D</td>
-                <td>(None, 28, 28, 256)</td>
-                <td>295,168</td>
-            </tr>
-            <tr>
-                <td>MaxPooling2D</td>
-                <td>(None, 14, 14, 256)</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>BatchNormalization</td>
-                <td>(None, 14, 14, 256)</td>
-                <td>1,024</td>
-            </tr>
-            <tr>
-                <td>Dropout</td>
-                <td>(None, 14, 14, 256)</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>GlobalAveragePooling2D</td>
-                <td>(None, 256)</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>Dense</td>
-                <td>(None, 512)</td>
-                <td>131,584</td>
-            </tr>
-            <tr>
-                <td>Dropout</td>
-                <td>(None, 512)</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>Dense</td>
-                <td>(None, 128)</td>
-                <td>65,664</td>
-            </tr>
-            <tr>
-                <td>Dropout</td>
-                <td>(None, 128)</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>Dense</td>
-                <td>(None, 3)</td>
-                <td>387</td>
-            </tr>
-            <tr class="total">
-                <td>Total Parameters</td>
-                <td colspan="2">1,761,995 (6.72 MB)</td>
-            </tr>
-            <tr class="total">
-                <td>Trainable Parameters</td>
-                <td colspan="2">587,011 (2.24 MB)</td>
-            </tr>
-            <tr class="total">
-                <td>Non-Trainable Parameters</td>
-                <td colspan="2">960 (3.75 KB)</td>
-            </tr>
-            <tr class="optimizer">
-                <td>Optimizer Parameters</td>
-                <td colspan="2">1,174,024 (4.48 MB)</td>
-            </tr>
-        </tbody>
-    </table>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<title>Lung Cancer Classification - AI-Powered Diagnosis</title>
+		<link
+			rel="stylesheet"
+			href="static/style.css" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+			rel="stylesheet" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+	</head>
+	<body>
+		<div class="app-container">
+			<!-- Navigation -->
+			<nav class="main-nav">
+				<div class="nav-brand">
+					<i class="fas fa-lungs"></i>
+					<span>LungAI</span>
+				</div>
+				<div class="nav-links">
+					<a
+						href="#home"
+						class="active"
+						>Home</a
+					>
+					<a href="#about">About</a>
+					<a href="#features">Features</a>
+					<a href="#contact">Contact</a>
+				</div>
+			</nav>
+
+			<!-- Hero Section -->
+			<section
+				id="home"
+				class="hero-section">
+				<div class="hero-content">
+					<h1>AI-Powered Lung Cancer Classification</h1>
+					<p>Advanced machine learning for accurate and rapid diagnosis</p>
+				</div>
+			</section>
+
+			<!-- Main Content -->
+			<main class="main-content">
+				<div
+					class="wrapper"
+					id="wrapperAD">
+					<div class="container">
+						<header>
+							<h2>Upload Your X-Ray Image</h2>
+							<p>Get instant analysis using our advanced AI model</p>
+						</header>
+
+						<div
+							class="upload-container"
+							onclick="triggerFileInput()"
+							ondrop="handleDrop(event)"
+							ondragover="allowDrop(event)">
+							<div class="upload-content">
+								<i class="fas fa-cloud-upload-alt"></i>
+								<p>Drag & Drop or Click to Upload</p>
+								<span class="file-format">Supported formats: JPG, PNG</span>
+							</div>
+							<input
+								type="file"
+								id="fileInput"
+								accept="image/*"
+								onchange="handleImageSelection(event)" />
+						</div>
+
+						<div
+							id="guidelines"
+							class="image-guidelines">
+							<div class="guideline-item">
+								<img
+									src="static/images/example1.jpg"
+									alt="Example 1" />
+								<p>Clear X-Ray Image</p>
+							</div>
+							<div class="guideline-item">
+								<img
+									src="static/images/example2.jpg"
+									alt="Example 2" />
+								<p>Well-Centered View</p>
+							</div>
+						</div>
+
+						<button
+							class="btn-submit"
+							onclick="classifyImage()">
+							<i class="fas fa-microscope"></i>
+							Analyze Image
+						</button>
+
+						<div
+							id="loadingBar"
+							class="loading-bar">
+							<div class="loading-bar-inner"></div>
+						</div>
+
+						<div
+							id="result"
+							class="result">
+							<div class="result-content">
+								<h3>Analysis Results</h3>
+								<div class="result-details">
+									<div class="result-item">
+										<span class="label">Prediction:</span>
+										<span
+											id="prediction"
+											class="value"></span>
+									</div>
+									<div class="result-item">
+										<span class="label">Confidence:</span>
+										<span
+											id="confidence"
+											class="value"></span>
+									</div>
+								</div>
+								<div class="result-image">
+									<img
+										id="uploadedImage"
+										src=""
+										alt="Uploaded X-Ray" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+
+			<!-- Side Panels -->
+			<div
+				id="slidingDetails"
+				class="sliding-details">
+				<div class="panel-header">
+					<h3>Detailed Analysis</h3>
+					<button
+						class="close-btn"
+						onclick="toggleDetails()">
+						<i class="fas fa-times"></i>
+					</button>
+				</div>
+				<div class="panel-content">
+					<!-- Add detailed analysis content here -->
+				</div>
+			</div>
+
+			<div
+				id="slidingDetailsLeft"
+				class="sliding-details-left">
+				<div class="panel-header">
+					<h3>Model Information</h3>
+					<button
+						class="close-btn"
+						onclick="toggleDetails()">
+						<i class="fas fa-times"></i>
+					</button>
+				</div>
+				<div class="panel-content">
+					<!-- Add model information content here -->
+				</div>
+			</div>
+
+			<!-- Footer -->
+			<footer class="main-footer">
+				<div class="footer-content">
+					<div class="footer-section">
+						<h4>About LungAI</h4>
+						<p>Advanced AI-powered lung cancer classification system</p>
+					</div>
+					<div class="footer-section">
+						<h4>Quick Links</h4>
+						<a href="#home">Home</a>
+						<a href="#about">About</a>
+						<a href="#features">Features</a>
+						<a href="#contact">Contact</a>
+					</div>
+					<div class="footer-section">
+						<h4>Contact</h4>
+						<p>Email: support@lungai.com</p>
+						<p>Phone: (555) 123-4567</p>
+					</div>
+				</div>
+				<div class="footer-bottom">
+					<p>&copy; 2024 LungAI. All rights reserved.</p>
+				</div>
+			</footer>
+		</div>
+
+		<script src="static/script.js"></script>
+	</body>
 </html>

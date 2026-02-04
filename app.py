@@ -1,7 +1,7 @@
 import os
-import tensorflow as tf
+os.environ['KERAS_BACKEND'] = 'jax'  # Set JAX as Keras backend
+import keras
 from flask import Flask, render_template, request, jsonify
-from tensorflow.keras.preprocessing import image
 import numpy as np
 from PIL import Image
 
@@ -9,8 +9,9 @@ from PIL import Image
 app = Flask(__name__)
 
 # Load the trained model
-model_path = "E:\\Github Repo\\Lung-cancer-classification\\model\\lung_cancer_model_final.h5"
-model = tf.keras.models.load_model(model_path)
+base_dir = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(base_dir, "model", "lung_cancer_model_final.h5")
+model = keras.models.load_model(model_path)
 
 # Define class labels
 class_names = ["adenocarcinoma", "benign", "squamous_cell_carcinoma"]
@@ -40,18 +41,25 @@ def predict():
 
     try:
         # Open and process the image
-        img = Image.open(file.stream)
+        img = Image.open(file.stream).convert('RGB')
         img_array = prepare_image(img)
 
         # Predict using the model
         predictions = model.predict(img_array)
-        predicted_index = np.argmax(predictions, axis=1)[0]
+        predicted_index = int(np.argmax(predictions, axis=1)[0])
         predicted_class = class_names[predicted_index]
-        confidence = f"{np.max(predictions) * 100:.2f}%"
+        confidence = float(np.max(predictions) * 100)
+        
+        # Get all class probabilities
+        all_predictions = {
+            class_names[i]: float(predictions[0][i] * 100) 
+            for i in range(len(class_names))
+        }
 
         return jsonify({
             "prediction": predicted_class,
-            "confidence": confidence
+            "confidence": f"{confidence:.2f}%",
+            "all_predictions": all_predictions
         })
     except Exception as e:
         return jsonify({"error": str(e)}), 500

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lung Cancer Classifier - AI Diagnostic Tool</title>
+    <link rel="icon" href="../static/images/favicon.webp" type="image/webp">
+    <link rel="stylesheet" href="../static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	</head>
+	<style>
+		table {
+			border-collapse: collapse;
+			width: 80%;
+			margin: 20px 0;
+			background-color: #fff;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		}
+		th,
+		td {
+			padding: 12px 15px;
+			text-align: center;
+			border: 1px solid #ddd;
+		}
+		th {
+			background-color: #4caf50;
+			color: white;
+		}
+		tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
+		.total,
+		.optimizer {
+			font-weight: bold;
+			background-color: #f1f1f1;
+		}
+	</style>
+	<body>
+		<div
+			id="wrapperAD"
+			class="wrapperAdjust">
+			<div class="wrapper">
+				<div class="container">
+					<header>
+						<h1>Lung Cancer Classification</h1>
+						<p>Upload a histopathological image of lung tissue for AI-based classification.</p>
+					</header>
+
+					<!-- Image upload container -->
+					<div
+						class="upload-container"
+						onclick="triggerFileInput()"
+						ondrop="handleDrop(event)"
+						ondragover="allowDrop(event)">
+						<div class="plus-sign">+</div>
+						<input
+							type="file"
+							id="fileInput"
+							name="image"
+							accept="image/*"
+							required
+							onchange="handleImageSelection(event)" />
+					</div>
+
+					<!-- Image guidelines -->
+					<!-- Image guidelines (initially hidden) -->
+					<div
+						id="guidelines"
+						class="guidelines">
+						<img
+							src="../static/images/lungaca4001.jpeg"
+							alt="Guideline 1" />
+						<img
+							src="../static/images/lungaca4002.jpeg"
+							alt="Guideline 2" />
+						<img
+							src="../static/images/lungscc4001.jpeg"
+							alt="Guideline 3" />
+						<img
+							src="../static/images/lungscc4002.jpeg"
+							alt="Guideline 4" />
+					</div>
+
+					<!-- Classify button -->
+					<button
+						id="classifyButton"
+						class="btn-submit"
+						onclick="classifyImage()"
+						>Classify</button
+					>
+
+					<!-- Loading bar -->
+					<div
+						id="loadingBar"
+						class="loading-bar"
+						style="display: none">
+						<div class="loading-bar-inner"></div>
+					</div>
+
+					<!-- Result -->
+					<div
+						id="result"
+						class="result">
+						<h3>Prediction</h3>
+						<p id="prediction"></p>
+						<div class="result-image">
+							<img
+								id="uploadedImage"
+								src=""
+								alt="Uploaded Image" />
+						</div>
+						<button
+							id="seeMoreButton"
+							class="btn-see-more"
+							onclick="toggleDetails()"
+							>See More</button
+						>
+					</div>
+
+					<!-- Sliding Details Left (Initially hidden) -->
+					<div
+						id="slidingDetailsLeft"
+						class="sliding-details-left">
+						<h4>Neural Network Achitecture</h4>
+						<div class="slidingDetailsLeft-content">
+							<table>
+								<thead>
+									<tr>
+										<th>Layer (Type)</th>
+										<th>Output Shape</th>
+										<th>Param #</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Rescaling (Rescaling)</td>
+										<td>(None, 224, 224, 3)</td>
+										<td>0</td>
+									</tr>
+									<tr>
+										<td>Conv2D</td>
+										<td>(None, 224, 224, 32)</td>
+										<td>896</td>
+									</tr>
+									<tr>
+										<td>MaxPooling2D</td>
+										<td>(None, 112, 112, 32)</td>
+										<td>0</td>
+									</tr>
+									<tr>
+										<td>BatchNormalization</td>
+										<td>(None, 112, 112, 32)</td>
+										<td>128</td>
+									</tr>
+									<tr>
+										<td>Dropout</td>
+										<td>(None, 112, 112, 32)</td>
+										<td>0</td>
+									</tr>
+									<tr>
+										<td>Conv2D</td>
+										<td>(None, 112, 112, 64)</td>
+										<td>18,496</td>
+									</tr>
+									<tr>
+										<td>MaxPooling2D</td>
+										<td>(None, 56, 56, 64)</td>
+										<td>0</td>
+									</tr>
+									<tr>
+										<td>BatchNormalization</td>
+										<td>(None, 56, 56, 64)</td>
+										<td>256</td>
+									</tr>
+									<tr>
+										<td>Dropout</td>
+										<td>(None, 56, 56, 64)</td>
+										<td>0</td>
+									</tr>
+									<tr>
+										<td>Conv2D</td>
+										<td>(None, 56, 56, 128)</td>
+										<td>73,856</td>
+									</tr>
+									<tr>
+										<td>MaxPooling2D</td>
+										<td>(None, 28, 28, 128)</td>
+										<td>0</td>
+									</tr>
+									<tr>
+										<td>BatchNormalization</td>
+										<td>(None, 28, 28, 128)</td>
+										<td>512</td>
+									</tr>
+									<tr>
+										<td>Dropout</td>
+										<td>(None, 28, 28, 128)</td>
+										<td>0</td>
+									</tr>
+									<tr>
+										<td>Conv2D</td>
+										<td>(None, 28, 28, 256)</td>
+										<td>295,168</td>
+									</tr>
+									<tr>
+										<td>MaxPooling2D</td>
+										<td>(None, 14, 14, 256)</td>
+										<td>0</td>
+									</tr>
+									<tr>
+										<td>BatchNormalization</td>
+										<td>(None, 14, 14, 256)</td>
+										<td>1,024</td>
+									</tr>
+									<tr>
+										<td>Dropout</td>
+										<td>(None, 14, 14, 256)</td>
+										<td>0</td>
+									</tr>
+									<tr>
+										<td>GlobalAveragePooling2D</td>
+										<td>(None, 256)</td>
+										<td>0</td>
+									</tr>
+									<tr>
+										<td>Dense</td>
+										<td>(None, 512)</td>
+										<td>131,584</td>
+									</tr>
+									<tr>
+										<td>Dropout</td>
+										<td>(None, 512)</td>
+										<td>0</td>
+									</tr>
+									<tr>
+										<td>Dense</td>
+										<td>(None, 128)</td>
+										<td>65,664</td>
+									</tr>
+									<tr>
+										<td>Dropout</td>
+										<td>(None, 128)</td>
+										<td>0</td>
+									</tr>
+									<tr>
+										<td>Dense</td>
+										<td>(None, 3)</td>
+										<td>387</td>
+									</tr>
+								</tbody>
+							</table>
+
+							<div style="text-align: left; background-color: rgb(223, 223, 223); padding: 10px">
+								<p style="color: black">Total Parameters</p>
+								<p>1,761,995 (6.72 MB)</p>
+							</div>
+
+							<div style="text-align: left; background-color: rgb(223, 223, 223); padding: 10px">
+								<p style="color: black">Trainable Parameters</p>
+								<p>587,011 (2.24 MB)</p>
+							</div>
+							<div style="text-align: left; background-color: rgb(223, 223, 223); padding: 10px">
+								<p style="color: black">Non-Trainable Parameters</p>
+								<p>960 (3.75 KB)</p>
+							</div>
+
+							<div style="text-align: left; background-color: rgb(223, 223, 223); padding: 10px">
+								<p style="color: black"> Optimizer Parameters</p>
+								<p> 1,174,024 (4.48 MB)</p>
+							</div>
+
+							<h4 style="margin-top: 2%">Confusion Matrix</h4>
+							<div class="slidingDetails-img">
+								<img
+									src="../static/images/Confusion Matrix.png"
+									style="margin-bottom: 10px; width: 260px !important"
+									alt="Guideline 1" />
+							</div>
+						</div>
+					</div>
+
+					<!-- Sliding Details (Initially hidden) -->
+					<div
+						id="slidingDetails"
+						class="sliding-details">
+						<h4>Details</h4>
+						<div class="slidingDetails-img">
+							<img
+								src="../static/images/accuracy.png"
+								style="margin-bottom: 12px"
+								alt="Guideline 1" />
+
+							<img
+								src="../static/images/loss.png"
+								style="margin-bottom: 12px"
+								alt="Guideline 2" />
+							<h3>Confidence Level</h3>
+							<p
+								style="background-color: rgb(223, 223, 223); padding: 10px; margin-top: 5px"
+								id="confidence"></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="../static/script.js"></script>
+	</body>
+</html>
