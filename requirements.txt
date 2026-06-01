@@ -1,0 +1,7 @@
+keras
+flask
+numpy
+pandas
+pillow
+matplotlib
+jax[cpu]
